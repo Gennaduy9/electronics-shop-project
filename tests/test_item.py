@@ -22,10 +22,34 @@ def test_calculate_total_price(item_shop):
     assert item_shop
 
 
-def test_apply_discount():
+def test_apply_discount(item_shop):
     """Когда мы создаем экземпляр класса со скидкой, вернется скидка."""
     Item.pay_rate = 0.5
-    assert item_shop
+    item_shop.apply_discount()
+    assert item_shop.price == 500
+
+def test_name_setter(item_shop):
+    Item.name = "Клавиатура"
+    assert Item.name == "Клавиатура"
+
+def test_instantiate_from_csv():
+    items = Item.instantiate_from_csv()
+    assert items.name == "Клавиатура"
+    assert items.price == 75
+    assert items.quantity == 5
+
+
+def test_string_to_number():
+    assert Item.string_to_number('5,55') == 5.55
+    assert Item.string_to_number('10,00') == 10.0
+    assert Item.string_to_number('0,99') == 0.99
+    assert Item.string_to_number('100') == 100.0
+
+
+
+
+
+
 
 
 
