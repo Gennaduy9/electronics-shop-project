@@ -2,16 +2,17 @@
 
 import pytest
 from src.item import Item
+from src.phone import Phone
 
 
 @pytest.fixture
 def item_shop():
-    return Item('видеокамера',1000, 20)
+    return Item('Видеокамера',1000, 20)
 
 
 def test_positive_shop_init(item_shop):
     """Когда мы создаем экземпляр класса item, возращаем name, quantity, price"""
-    assert item_shop.name == 'видеокамера'
+    assert item_shop.name == 'Видеокамера'
     assert item_shop.quantity == 20
     assert item_shop.price == 1000
 
@@ -29,14 +30,14 @@ def test_apply_discount(item_shop):
     assert item_shop.price == 500
 
 def test_name_setter(item_shop):
-    Item.name = "Клавиатура"
-    assert Item.name == "Клавиатура"
+    Item.name = "iPhone 15"
+    assert Item.name == "iPhone 15"
 
 def test_instantiate_from_csv():
     items = Item.instantiate_from_csv()
-    assert items.name == "Клавиатура"
-    assert items.price == 75
-    assert items.quantity == 5
+    assert items.name == "iPhone 15"
+    assert items.price == 112000
+    assert items.quantity == 3
 
 
 def test_string_to_number():
@@ -51,8 +52,13 @@ def test_magic_method():
     assert repr(item1) == "Item('Смартфон', 10000, 20)"
     assert str(item1) == 'Смартфон'
 
+@pytest.fixture
+def phone_x():
+   return Phone('iPhone 15', 112000, 3, 3)
 
-
-
+def test_magic_method_add():
+    item_y = Item("Смартфон", 100000, 2)
+    assert f'add(item_y) + phone_x == 212000'
+    assert f'add(phone_x) + phone_x == 5'
 
 

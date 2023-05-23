@@ -30,8 +30,7 @@ class Item:
         if 0 < len(name) <= 10:
             self.__name = name
         else:
-            #raise Exception ("Длина наименования товара превышает 10 символов")
-            print("Ошибка: длина наименования товара превышает 10 символов")
+            raise Exception ("Длина наименования товара превышает 10 символов")
 
 
     def calculate_total_price(self) -> float:
@@ -51,7 +50,7 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         items = []
-        with open('C:\\Users\\Геннадий Михайлович\\PycharmProjects\\electronics-shop-project\\src\\items.csv', 'r', encoding='cp1251') as csvfile:
+        with open('C:\\Users\\Геннадий Михайлович\\PycharmProjects\\electronics-shop-project\\src\\items.csv', 'r', encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 name = row['name']
