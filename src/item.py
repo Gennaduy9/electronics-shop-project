@@ -50,7 +50,8 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         items = []
-        with open('C:\\Users\\Геннадий Михайлович\\PycharmProjects\\electronics-shop-project\\src\\items.csv', 'r', encoding='windows-1251') as csvfile:
+        with open('C:\\Users\\Геннадий Михайлович\\PycharmProjects\\electronics-shop-project\\src\\items.csv', 'r',
+                  encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 name = row['name']

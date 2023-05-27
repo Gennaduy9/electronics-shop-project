@@ -24,7 +24,7 @@ def test_calculate_total_price(item_shop):
 
 
 def test_apply_discount(item_shop):
-    """Когда мы создаем экземпляр класса со скидкой, вернется скидка."""
+    # """Создаем экземпляр класса со скидкой, вернется скидка."""
     Item.pay_rate = 0.5
     item_shop.apply_discount()
     assert item_shop.price == 500
