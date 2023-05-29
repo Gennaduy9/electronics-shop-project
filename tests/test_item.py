@@ -1,8 +1,11 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
+from unittest.mock import MagicMock
 
 import pytest
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 from src.phone import Phone
+
+
 
 
 @pytest.fixture
@@ -33,13 +36,6 @@ def test_name_setter(item_shop):
     Item.name = "iPhone 15"
     assert Item.name == "iPhone 15"
 
-def test_instantiate_from_csv():
-    items = Item.instantiate_from_csv()
-    assert items.name == "iPhone 15"
-    assert items.price == 112000
-    assert items.quantity == 3
-
-
 def test_string_to_number():
     assert Item.string_to_number('5,55') == 5.55
     assert Item.string_to_number('10,00') == 10.0
@@ -51,6 +47,34 @@ def test_magic_method():
     item1 = Item("Смартфон", 10000, 20)
     assert repr(item1) == "Item('Смартфон', 10000, 20)"
     assert str(item1) == 'Смартфон'
+
+
+@pytest.fixture
+def mocker():
+    return MagicMock()
+
+def test_instantiate_from_csv(mocker):
+    try:
+        items = Item.instantiate_from_csv()
+        assert len(items) == 1
+        assert items[0].name == 'iPhone 15'
+        assert items[0].price == 112000
+        assert items[0].quantity == 3
+    except FileNotFoundError:
+        print('Отсутствует файл item.csv')
+    except InstantiateCSVError:
+        print('Файл item.csv поврежден')
+    finally:
+        print('Код в файле item.csv работает корректно')
+
+def test_instantiate_from_csv_valid(mocker):
+    mock_file = mocker.mock_open(read_data='name,price,quantity\niPhone 15,112000,3\n')
+    with mocker.patch('builtins.open', mock_file):
+        items = Item.instantiate_from_csv()
+        assert len(items) == 1
+        assert items[0].name == 'iPhone 15'
+        assert items[0].price == 112000
+        assert items[0].quantity == 3
 
 @pytest.fixture
 def phone_x():
