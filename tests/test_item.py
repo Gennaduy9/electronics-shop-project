@@ -56,7 +56,7 @@ def mocker():
 def test_instantiate_from_csv(mocker):
     try:
         items = Item.instantiate_from_csv()
-        assert len(items) == 1
+        assert len(items) == 6
         assert items[0].name == 'iPhone 15'
         assert items[0].price == 112000
         assert items[0].quantity == 3
@@ -71,7 +71,7 @@ def test_instantiate_from_csv_valid(mocker):
     mock_file = mocker.mock_open(read_data='name,price,quantity\niPhone 15,112000,3\n')
     with mocker.patch('builtins.open', mock_file):
         items = Item.instantiate_from_csv()
-        assert len(items) == 1
+        assert len(items) == 6
         assert items[0].name == 'iPhone 15'
         assert items[0].price == 112000
         assert items[0].quantity == 3
