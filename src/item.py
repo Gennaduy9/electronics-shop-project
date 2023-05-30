@@ -66,10 +66,10 @@ class Item:
                         items.append(cls(name, price, quantity))
                     except (ValueError, KeyError):
                         continue
-                    else:
+                    except:
                         raise InstantiateCSVError
         except FileNotFoundError:
-            print('Отсутствует файл item.csv')
+             print('Отсутствует файл item.csv')
         except InstantiateCSVError as x:
             print(x.message)
         finally:
