@@ -54,26 +54,23 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         items = []
+        expected_fields = ['name', 'price', 'quantity']  # список ожидаемых полей таблицы
         try:
             with open('C:\\Users\\Геннадий Михайлович\\PycharmProjects\\electronics-shop-project\\src\\items.csv',
-                      'r', encoding='windows-1251') as csvfile:
+                'r', encoding='windows-1251') as csvfile:
                 reader = csv.DictReader(csvfile)
+                if reader.fieldnames != expected_fields:  # проверяем, что имена полей соответствуют ожидаемым
+                    print("Ошибка: количество полей в таблице не соответствует ожидаемым")
+                    exit(1)
                 for row in reader:
-                    try:
-                        name = row['name']
-                        price = int(row['price'])
-                        quantity = int(row['quantity'])
-                        items.append(cls(name, price, quantity))
-                    except (ValueError, KeyError):
-                        continue
-                    except:
-                        raise InstantiateCSVError
+                    name = str(row['name'])
+                    price = int(row['price'])
+                    quantity = int(row['quantity'])
+                    items.append(cls(name, price, quantity))
         except FileNotFoundError:
-             print('Отсутствует файл item.csv')
-        except InstantiateCSVError as x:
-            print(x.message)
-        finally:
-            print('Код в файле item.csv работает корректно')
+            raise FileNotFoundError('Отсутствует файл item.csv')
+        except InstantiateCSVError as self:
+            raise self.message
         return items
 
     @staticmethod
