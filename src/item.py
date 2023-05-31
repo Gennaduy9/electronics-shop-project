@@ -60,8 +60,7 @@ class Item:
                 'r', encoding='windows-1251') as csvfile:
                 reader = csv.DictReader(csvfile)
                 if reader.fieldnames != expected_fields:  # проверяем, что имена полей соответствуют ожидаемым
-                      raise ("Ошибка: количество полей в таблице не соответствует ожидаемым")
-                      #exit(1)
+                      raise InstantiateCSVError ('Файл item.csv поврежден')
                 for row in reader:
                     name = str(row['name'])
                     price = int(row['price'])
@@ -69,8 +68,6 @@ class Item:
                     items.append(cls(name, price, quantity))
         except FileNotFoundError:
             raise FileNotFoundError('Отсутствует файл item.csv')
-        except:
-            raise InstantiateCSVError ('Файл item.csv поврежден')
         return items
 
     @staticmethod
